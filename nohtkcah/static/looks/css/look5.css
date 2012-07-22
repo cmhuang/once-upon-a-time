@@ -1,0 +1,57 @@
+span{
+	color: white;
+}
+.text_center {
+	text-align: center;	
+}
+.text_right {
+	text-align: right;
+}
+.text_justify {
+	text-align: justify;
+}
+.text_top {
+	vertical-align: top;
+}
+
+.index_looks {
+	position: relative;
+}
+.index_left {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 500px;
+	height: 500px;
+	margin: 10px;
+	vertical-align: top;
+}
+.index_right {
+	position: absolute;
+	left: 400px;
+	top: 0px;
+	width: 600px;
+	height: 500px;
+	margin: 5px;
+	vertical-align: top;
+	
+}
+.index_smalllooks {
+	
+}
+.index_palettes {
+	display: block;
+	width: 590px;
+	height: 50px;
+}
+.index_smalllook {
+	display: inline-block;
+/*	width: 190px;
+	height: 125px;
+*/	background-color: white;
+	border: 2px solid white;
+	border-radius: 5px;
+}
+.hidden {
+	display: none;
+}

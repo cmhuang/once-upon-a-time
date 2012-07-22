@@ -1,0 +1,67 @@
+{% extends 'looks/base.html' %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/look5.css" />
+{% endblock %}
+
+{% block inlinejs %}
+<!-- hide
+function jumpto(x){
+
+if (document.form1.jumpmenu.value != "null") {
+document.location.href = x
+}
+}
+// end hide -->
+{% endblock %}
+
+{% block content %}
+<div>
+</div>
+<div>
+	<form name="form1">
+		{% csrf_token %}
+		<select name="jumpmenu" onChange="jumpto(document.form1.jumpmenu.options[document.form1.jumpmenu.options.selectedIndex].value)">
+			<option>Jump to...</option>
+			<option value="/looks/r">Red</option>
+			<option value="/looks/rp">Red-Purple</option>
+			<option value="/looks/p">Purpler</option>
+			<option value="/looks/pb">Purple-Blue</option>
+			<option value="/looks/b">Blue</option>
+			<option value="/looks/bg">Blue-Green</option>
+			<option value="/looks/g">Green</option>
+			<option value="/looks/gy">Green-Yellow</option>
+			<option value="/looks/y">Yellow</option>
+			<option value="/looks/yr">Yellow-Red</option>
+		</select>
+	</form>
+
+</div>
+<div class="index_looks">
+{% if looks.0 %}
+	<div class="index_left">
+		<img src="{{ looks.0.look_photo.url }}" alt="look photo" height="450px" />	
+	</div>
+	<div class="index_right">
+		<div class="index_smalllooks">
+{% endif %}
+{% for look in looks %}
+			<div class="index_smalllook">
+				<div class="index_smalllook_img">
+				<img src="{{ look.look_photo.url }}" alt="look photo" height="200px" />
+				</div>
+				<div class="index_smalllook_banner">
+					<div>{{ look.look_short_desc }}</div>
+					<div>{{ look.look_photo_upload_datetime }}</div>
+				</div>
+			</div>
+{% empty %}
+<div class="index_look">
+	There is no looks.
+</div>
+{% endfor %}
+		</div>
+	</div>
+	
+</div>
+{% endblock %}

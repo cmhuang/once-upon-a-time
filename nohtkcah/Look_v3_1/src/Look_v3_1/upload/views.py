@@ -6,10 +6,14 @@ from django.core.files.base import ContentFile
 from django.template import RequestContext
 from django.conf import settings
 from cStringIO import StringIO
+from random import choice
 from PIL import Image
 from Look_v3_1.look.models import Look, LookUploadForm, LookColor
+from util import ImageProcessing
 
 def upload(request):
+    color_dict = {9:"r", 8:"rp", 7:"p", 6:"pb", 5:"b", 4:"bg", 3:"g", 2:"gy", 1:"y", 0:"yr"}
+    
     if request.method == 'GET':
         form = LookUploadForm()
         return render_to_response('looks/upload.html',
@@ -38,15 +42,26 @@ def upload(request):
                 fd.write(chunk)
             fd.close()
             #detect img color
-            (red, green, blue) = average_image_color(filename)
-            color = LookColor()
-            color.belong_to_look = look
-            color.red = red
-            color.green = green
-            color.blue = blue
+            colors = ImageProcessing.best_matched_colors(filename)
+            for c in colors:
+                color = LookColor()
+                color.belong_to_look = look
+                color.color_category = color_dict[c]
+                color.red = 0
+                color.green = 0
+                color.blue = 0
+                color.hue = 0
+                color.save()
+            
+            #(red, green, blue) = average_image_color(filename)
+            #color = LookColor()
+            #color.belong_to_look = look
+            #color.red = red
+            #color.green = green
+            #color.blue = blue
             #color.hue = hue
-            #color.color_category = color_category
-            color.save()
+            #color.color_category = 'b' #choice(LookColor.COLOR_LIST)[0]
+            #color.save()
             return HttpResponseRedirect(reverse('Look_v3_1.look.views.detail', args=(look.id,)))
         else:
             return render_to_response('looks/upload.html',
@@ -89,3 +104,5 @@ def average_image_color(filepath):
     sum( i*w for i, w in enumerate(g) ) / sum(g),
     sum( i*w for i, w in enumerate(b) ) / sum(b)
     )
+    
+

@@ -13,8 +13,11 @@ urlpatterns = patterns('Look_v3_1',
     url(r'^looks/upload/$', 'upload.views.upload'),
     # view a look
     url(r'^looks/(?P<look_id>\d+)/$', 'look.views.detail', name='look_detail'),
+    #filter
+    url(r'^looks/(?P<color_string>\w{0,2})/$', 'look.views.filter', name='look_filter'),
     # home
     url(r'^looks/$', 'look.views.index'),
+
 )
 
 urlpatterns += patterns('',
